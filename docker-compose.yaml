@@ -1,0 +1,14 @@
+version: "2.0"
+services:
+  spark:
+      build: .
+      image: spark_local
+      container_name: spark_local
+      restart: always
+      ports:
+        - "8081:8081"
+      environment:
+        ENV_NAME: "LOCAL"
+      volumes:
+        - ./scripts:/tmp/scripts
+      command: ["/usr/bin/dumb-init", "--", "entrypoint.sh"]
