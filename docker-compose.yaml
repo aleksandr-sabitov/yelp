@@ -1,14 +1,31 @@
 version: "2.0"
 services:
-  spark:
-      build: .
-      image: spark_local
-      container_name: spark_local
-      restart: always
-      ports:
-        - "8081:8081"
-      environment:
-        ENV_NAME: "LOCAL"
-      volumes:
-        - ./scripts:/tmp/scripts
-      command: ["/usr/bin/dumb-init", "--", "entrypoint.sh"]
+  spark-master:
+    image: bde2020/spark-master:2.4.0-hadoop2.7
+    container_name: spark-master
+    ports:
+      - "8080:8080"
+      - "7077:7077"
+    environment:
+      - INIT_DAEMON_STEP=setup_spark
+      - "constraint:node==sparkmaster"
+  spark-worker:
+    image: bde2020/spark-worker:2.4.0-hadoop2.7
+    container_name: spark-worker
+    depends_on:
+      - spark-master
+    ports:
+      - "8081:8081"
+    environment:
+      - "SPARK_MASTER=spark://spark-master:7077"
+      - "constraint:node==sparkmaster"
+  spark-client:
+    image: bde2020/spark-submit:2.4.0-hadoop2.7
+    container_name: spark-submit
+    depends_on:
+      - spark-master
+    environment:
+      - "SPARK_MASTER=spark://spark-master:7077"
+      - "constraint:node==sparkmaster"
+    volumes:
+      - /Users/asabitov/Downloads/yelp/:/tmp/yelp

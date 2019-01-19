@@ -1,17 +1,6 @@
-FROM registry.opensource.zalan.do/stups/ubuntu:latest
+FROM bde2020/spark-python-template:2.4.0-hadoop2.7
 MAINTAINER alksndr.sbtv@gmail.com
 
 
-# all APIs, clients, ...
-COPY scripts/prepare.sh /tmp/prepare.sh
-RUN /tmp/prepare.sh
-
-# Spark envs
-ENV SPARK_HOME=/usr/lib/Spark
-ENV PATH=$PATH:/usr/lib/Spark/bin
-
-# startup script
-COPY scripts/entrypoint.sh ${AIRFLOW_HOME}/entrypoint.sh
-ENTRYPOINT ["/usr/bin/dumb-init", "--"]
-
-CMD ["entrypoint.sh"]
+ENV SPARK_APPLICATION_PYTHON_LOCATION /app/entrypoint.py
+ENV SPARK_APPLICATION_ARGS "foo bar baz"
