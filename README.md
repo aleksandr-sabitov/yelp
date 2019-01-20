@@ -12,7 +12,8 @@ This repository is used to demo Spark SQL case for Yelp data set - https://www.y
 2) Startup (customised ) Spark client container ("application") + attach tar-file as docker volume
 3) Extracting file from tar within Spark client container
 4) Converting JSON formats into Parquet formats using Spark SQL
-5) Some examples with Spark SQL (counts on each table, joins for some "business"-like statistics)
+5) Some examples with Spark SQL (counts on each table, joins for some "business"-like statistics):
+    --> see file *app/sql_examples.sql*
 
 #### TODO
 1) add support for date formats
