@@ -73,7 +73,7 @@ Removing network yelp_default
 
 ```
 
-#### In case of faulires during start or usage 
+#### In case of failures during start or usage 
 You can also double check that docker containers are down by command:
 `docker-compose down` 
 
